@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, ScrollView } from 'react-native';
 import { Card, ListItem } from 'react-native-elements';
 import { LEADERS } from '../shared/leaders';
 
@@ -20,7 +20,6 @@ const RenderHistory = (props) => {
 
 const RenderLeaders = ({ item, index }) => {
   return (
-    <Card title='Corporate Leadership'>
       <ListItem
         key={index}
         title={item.name}
@@ -28,9 +27,6 @@ const RenderLeaders = ({ item, index }) => {
         leftAvatar={{ source: require('./images/alberto.png')}}
 
       />
-    </Card>
-
-
   )
 }
 
@@ -51,14 +47,16 @@ export class About extends Component {
 
   render() {
     return (
-      <View>
+      <ScrollView>
         <RenderHistory />
+        <Card title='Corporate Leadership'>
         <FlatList
           data={this.state.leaders}
           renderItem={RenderLeaders}
           keyExtractor={item => item.id.toString()}
         />
-      </View>
+        </Card>
+      </ScrollView>
     )
   }
 }
