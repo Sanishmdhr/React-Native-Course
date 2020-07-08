@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import { View, Text, FlatList, ScrollView } from 'react-native';
 import { Card, ListItem } from 'react-native-elements';
 import { LEADERS } from '../shared/leaders';
+import {connect} from 'react-redux';
+import {baseUrl} from '../shared/baseUrl';
+
+const mapStateToProps = state => {
+  return{
+    leaders:state.leaders
+  }
+}
 
 const RenderHistory = (props) => {
   return (
@@ -24,7 +32,7 @@ const RenderLeaders = ({ item, index }) => {
         key={index}
         title={item.name}
         subtitle={item.description}
-        leftAvatar={{ source: require('./images/alberto.png')}}
+        leftAvatar={{ source: {uri: baseUrl+item.image}}}
 
       />
   )
@@ -32,14 +40,6 @@ const RenderLeaders = ({ item, index }) => {
 
 
 export class About extends Component {
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      leaders: LEADERS
-    }
-  }
 
   static navigationOptions = {
     title:"About Us"
@@ -51,7 +51,7 @@ export class About extends Component {
         <RenderHistory />
         <Card title='Corporate Leadership'>
         <FlatList
-          data={this.state.leaders}
+          data={this.props.leaders.leaders}
           renderItem={RenderLeaders}
           keyExtractor={item => item.id.toString()}
         />
@@ -61,4 +61,4 @@ export class About extends Component {
   }
 }
 
-export default About
+export default connect(mapStateToProps)(About);
