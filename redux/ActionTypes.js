@@ -13,3 +13,6 @@ export const ADD_LEADERS = 'ADD_LEADERS';
 export const PROMOS_LOADING = 'PROMOS_LOADING';
 export const PROMOS_FAILED = 'PROMOS_FAILED';
 export const ADD_PROMOS = 'ADD_PROMOS';
+
+export const ADD_FAVORITE="ADD_FAVROITE";
+export const POST_FAVORITE="POST_FAVROITE";
