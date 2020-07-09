@@ -9,13 +9,13 @@ import {promos} from './promos'
 
 export const ConfigureStore = () => {
   const store = createStore(
-    combineReducers({
-      dishes,
-      comments,
-      leaders,
-      promos
-    }),
-    applyMiddleware(thunk, logger)
+      combineReducers({
+          dishes,
+          comments,
+          promos,
+          leaders
+      }),
+      applyMiddleware(thunk, logger)
   );
 
   return store;
