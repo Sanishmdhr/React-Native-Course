@@ -16,3 +16,6 @@ export const ADD_PROMOS = 'ADD_PROMOS';
 
 export const ADD_FAVORITE="ADD_FAVROITE";
 export const POST_FAVORITE="POST_FAVROITE";
+
+export const ADD_COMMENT= "ADD_COMMENT";
+export const POST_COMMENT="POST_COMMENT";

@@ -11,33 +11,33 @@ class Reservation extends Component {
       guest: 1,
       smoking: false,
       date: '',
-      showModal:false
+      showModal: false
     }
 
   }
 
   static navigationOptions = {
-    title:'Reserve Table'
+    title: 'Reserve Table'
   };
 
-  toggleModal(){
-    this.setState({showModal:!this.state.showModal})
+  toggleModal() {
+    this.setState({ showModal: !this.state.showModal })
   }
 
-  handleReservation(){
+  handleReservation() {
     console.log(JSON.stringify(this.state));
-        this.toggleModal();
+    this.toggleModal();
   }
 
   resetForm() {
     this.setState({
-        guests: 1,
-        smoking: false,
-        date: '',
-        showModal: false
+      guests: 1,
+      smoking: false,
+      date: '',
+      showModal: false
     });
-}
-  
+  }
+
 
   render() {
     return (
@@ -92,12 +92,12 @@ class Reservation extends Component {
           />
         </View>
         <View style={styles.formRow}>
-            <Button
-              title='Reserve'
-              color="#512DA8"
-              accessibilityLabel="Learn more about this purple button"
-              onPress={() => this.handleReservation()}
-            />
+          <Button
+            title='Reserve'
+            color="#512DA8"
+            accessibilityLabel="Learn more about this purple button"
+            onPress={() => this.handleReservation()}
+          />
         </View>
         <Modal
           animationType={'slide'}
@@ -107,16 +107,16 @@ class Reservation extends Component {
           onRequestClose={() => this.toggleModal()}
         >
           <View style={styles.modal}>
-          <Text style = {styles.modalTitle}>Your Reservation</Text>
-          <Text style={styles.modalText}>Number of Guests: {this.state.guest}</Text>
-          <Text style={styles.modalText}>Smoking ? : {this.state.smoking ? 'Yes' : 'No'}</Text>   
-          <Text style={styles.modalText}>Date and Time : {this.state.date}</Text>
- 
-          <Button
-            title="Close"
-            onPress={() => {this.toggleModal(); this.resetForm()}}
-            color="#512DA8"
-          />
+            <Text style={styles.modalTitle}>Your Reservation</Text>
+            <Text style={styles.modalText}>Number of Guests: {this.state.guest}</Text>
+            <Text style={styles.modalText}>Smoking ? : {this.state.smoking ? 'Yes' : 'No'}</Text>
+            <Text style={styles.modalText}>Date and Time : {this.state.date}</Text>
+
+            <Button
+              title="Close"
+              onPress={() => { this.toggleModal(); this.resetForm() }}
+              color="#512DA8"
+            />
           </View>
 
         </Modal>
@@ -145,20 +145,20 @@ const styles = StyleSheet.create({
   modal: {
     justifyContent: 'center',
     margin: 20
- },
- modalTitle: {
-     fontSize: 24,
-     fontWeight: 'bold',
-     backgroundColor: '#512DA8',
-     textAlign: 'center',
-     color: 'white',
-     marginBottom: 20
- },
- modalText: {
-     fontSize: 18,
-     margin: 10
- }
-  
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    backgroundColor: '#512DA8',
+    textAlign: 'center',
+    color: 'white',
+    marginBottom: 20
+  },
+  modalText: {
+    fontSize: 18,
+    margin: 10
+  }
+
 })
 
 export default Reservation
