@@ -4,49 +4,66 @@ import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { ListItem } from 'react-native-elements';
 import { Loading } from './LoadingComponent';
+import { deleteFavorites } from '../redux/ActionCreators';
+import Swipeout from 'react-native-swipeout';
 
 
 const mapStateToProps = state => {
   return {
     dishes: state.dishes,
-    favorite:state.favorite 
+    favorite: state.favorite
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  deleteFavorites: (dishId) => dispatch(deleteFavorites(dishId))
+})
 
 
 class Favorites extends Component {
 
 
-  
+
   static navigationOptions = {
     title: 'My Favorites'
   };
 
   render() {
-    
-    const {navigate} = this.props.navigation;
 
-    const renderMenuItem = ({item, index}) => {
+    const { navigate } = this.props.navigation;
+
+    const renderMenuItem = ({ item, index }) => {
+
+      const rightButton = [
+        {
+          text: 'Delete',
+          type: 'delete',
+          onPress: () => this.props.deleteFavorites(item.id)
+        }
+      ]
+
       return (
-        
-        <ListItem
-          key={index}
-          title={item.name}
-          subtitle={item.description}
-          onPress={() => navigate('DishDetail', {dishId: item.id})}
-          leftAvatar={{source:{uri: baseUrl+ item.image}}}
-        />
+        <Swipeout right={rightButton} autoClose={true}>
+          <ListItem
+            key={index}
+            title={item.name}
+            subtitle={item.description}
+            onPress={() => navigate('DishDetail', { dishId: item.id })}
+            leftAvatar={{ source: { uri: baseUrl + item.image } }}
+          />
+        </Swipeout>
+
 
       );
     };
 
-    if(this.props.dishes.isLoading){
+    if (this.props.dishes.isLoading) {
       return (
-        <Loading/>
+        <Loading />
       )
     }
 
-    else if(this.props.dishes.errmess){
+    else if (this.props.dishes.errmess) {
       return (
         <View>
           <Text>{this.props.dishes.errmess}</Text>
@@ -54,8 +71,8 @@ class Favorites extends Component {
       )
     }
 
-    else{
-      return(
+    else {
+      return (
         <FlatList
           data={this.props.dishes.dishes.filter(dish => this.props.favorite.some(el => el === dish.id))}
           renderItem={renderMenuItem}
@@ -69,5 +86,5 @@ class Favorites extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Favorites);
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
 
