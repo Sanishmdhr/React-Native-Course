@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, FlatList } from 'react-native';
-import { DISHES } from '../shared/dishes';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { Tile } from 'react-native-elements';
