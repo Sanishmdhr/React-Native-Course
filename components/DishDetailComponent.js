@@ -23,10 +23,20 @@ const RenderDishDetail = (props) => {
 
   const dish = props.dish;
 
-  handleViewRef = ref => this.view = ref;
+handleViewRef = ref => this.view = ref;
 
   const recognizingDrag = ({ moveX, moveY, dx, dy }) => {
     if (dx < -200) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  
+  const recognizingLeftDrag = ({ moveX, moveY, dx, dy }) => {
+    if (dx > -200) {
       return true;
     }
     else {
@@ -59,12 +69,19 @@ const RenderDishDetail = (props) => {
 
         return true;
       }
+
+      if (recognizingLeftDrag(gestureState)) {
+          props.toggleModal();
+
+        return true;
+      }
     }
   })
   if (dish != null) {
     return (
-      <Animatable.View animation='fadeInDown' duration={2000} delay={1000} ref={this.handleViewRef} {...panResponder.panHandlers}
-      >
+      <Animatable.View animation="fadeInDown" duration={2000} delay={1000}
+                ref={this.handleViewRef}
+                {...panResponder.panHandlers}>
         <Card
           featuredTitle={dish.name}
           image={{ uri: baseUrl + dish.image }}
