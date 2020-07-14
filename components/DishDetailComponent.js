@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { View, Text, ScrollView, FlatList, StyleSheet, Modal, Button, Alert, PanResponder } from 'react-native';
+import { View, Text, ScrollView, FlatList, StyleSheet, Modal, Button, Alert, PanResponder, Share } from 'react-native';
 import { Icon, Card, Input, Rating } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
@@ -23,7 +23,18 @@ const RenderDishDetail = (props) => {
 
   const dish = props.dish;
 
-handleViewRef = ref => this.view = ref;
+  handleViewRef = ref => this.view = ref;
+
+  const shareDish = (title, message, url) => {
+    Share.share({
+      title: title,
+      message: title + ':' + message + '' + url,
+      url: url
+    },
+      {
+        dialogTitle: "Share" + title
+      })
+  };
 
   const recognizingDrag = ({ moveX, moveY, dx, dy }) => {
     if (dx < -200) {
@@ -34,7 +45,7 @@ handleViewRef = ref => this.view = ref;
     }
   }
 
-  
+
   const recognizingLeftDrag = ({ moveX, moveY, dx, dy }) => {
     if (dx > -200) {
       return true;
@@ -51,7 +62,7 @@ handleViewRef = ref => this.view = ref;
 
     onPanResponderGrant: () => {
       this.view.rubberBand(1000)
-      .then(endState => console.log(endState.finished ? 'finished' : 'cancelled'));
+        .then(endState => console.log(endState.finished ? 'finished' : 'cancelled'));
     },
 
     onPanResponderEnd: (e, gestureState) => {
@@ -71,7 +82,7 @@ handleViewRef = ref => this.view = ref;
       }
 
       if (recognizingLeftDrag(gestureState)) {
-          props.toggleModal();
+        props.toggleModal();
 
         return true;
       }
@@ -80,8 +91,8 @@ handleViewRef = ref => this.view = ref;
   if (dish != null) {
     return (
       <Animatable.View animation="fadeInDown" duration={2000} delay={1000}
-                ref={this.handleViewRef}
-                {...panResponder.panHandlers}>
+        ref={this.handleViewRef}
+        {...panResponder.panHandlers}>
         <Card
           featuredTitle={dish.name}
           image={{ uri: baseUrl + dish.image }}
@@ -104,6 +115,15 @@ handleViewRef = ref => this.view = ref;
               color='#5f27cd'
               onPress={() => props.toggleModal()}
             />
+
+            <Icon
+              raised
+              reverse
+              name='share'
+              type='font-awesome'
+              color='#51D2A8'
+              style={styles.cardItem}
+              onPress={() => shareDish(dish.name, dish.description, baseUrl + dish.image)} />
           </View>
         </Card>
       </Animatable.View>
